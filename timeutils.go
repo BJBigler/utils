@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/araddon/dateparse"
-	"github.com/bjbigler/clients/utils"
 )
 
 //GetMonthStartAndEnd returns a month's start date and end date when given
@@ -361,8 +360,8 @@ func FirstDayOfISOWeek(year int, week int, timezone *time.Location) time.Time {
 //it with *date* (can be IsZero, which then uses today's date),
 //and returns a time.Time object
 func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) time.Time {
-	hour := utils.ParseInt(atTime[0:2], 0)
-	minute := utils.ParseInt(atTime[3:], 0)
+	hour := ParseInt(atTime[0:2], 0)
+	minute := ParseInt(atTime[3:], 0)
 
 	if date.IsZero() {
 		date = time.Now().In(loc)
