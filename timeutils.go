@@ -386,3 +386,29 @@ func GetLocationFromTZ(tz string, defaultLoc *time.Location) *time.Location {
 	}
 	return location
 }
+
+//IsToday determins whether supplied date is today
+func IsToday(dte time.Time) bool {
+	yearNow, monthNow, dayNow := time.Now().Date()
+	yearDte, monthDte, dayDte := dte.Date()
+
+	if yearNow == yearDte && monthNow == monthDte && dayNow == dayDte {
+		return true
+	}
+
+	return false
+
+}
+
+//AcademicYearsAgo returns now.Year - n + 1
+//to account for full academic years
+func AcademicYearsAgo(n int64) int64 {
+
+	thisYear := AcademicYear(time.Now())
+
+	//Why + 1. Suppose we're in the 2019 academic year. Ten years
+	//ago is 2009, but not quite, because
+	//we don't want to count year 0 (2009). If we add one to year 0,
+	//we get... 2010, 2011...,2019, or 10 complete years.
+	return thisYear - n + 1
+}

@@ -587,3 +587,8 @@ func EmojiClockFace(t time.Time) string {
 
 	return clockEmoji
 }
+
+//ZeroPad64 adds a zero in front of *val*
+func ZeroPad64(val int64) string {
+	return fmt.Sprintf("%02d", val)
+}
