@@ -348,6 +348,12 @@ func GenerateRandom() int64 {
 	return int64(rand.Intn(max-min) + min)
 }
 
+//GenerateRandom returns a pseudorandom whole number in the provided range
+func GenerateRandomFromRange(min, max int) int64 {
+	rand.Seed(time.Now().Unix())
+	return int64(rand.Intn(max-min) + min)
+}
+
 //GetURL goes to the given URL and returns whatever html/string at the address.
 // func GetURL(ctx context.Context, url string) string {
 

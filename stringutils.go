@@ -7,6 +7,7 @@ import (
 	"time"
 	"unicode"
 
+	"golang.org/x/text/runes"
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
 )
@@ -139,13 +140,15 @@ func ReplaceAccents(input string) string {
 
 	input = strings.Replace(input, "æ", "ae", -1)
 
-	isMn := func(r rune) bool {
-		return unicode.Is(unicode.Mn, r) // Mn: nonspacing marks
-	}
+	// isMn := func(r rune) bool {
+	// 	return unicode.Is(unicode.Mn, r) // Mn: nonspacing marks
+	// }
 
 	b := make([]byte, len(input))
 
-	t := transform.Chain(norm.NFD, transform.RemoveFunc(isMn), norm.NFC)
+	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
+
+	//t := transform.Chain(norm.NFD, transform.RemoveFunc(isMn), norm.NFC)
 	_, _, err := t.Transform(b, []byte(input), true)
 
 	if err != nil {
