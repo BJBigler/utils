@@ -20,7 +20,13 @@ func Log(message ...interface{}) {
 	}
 
 	logname := time.Now().Format("20060102_log.txt")
+	directory := path.Join(pwd, "logs")
 	logfile := path.Join(pwd, "logs", logname)
+
+	//Does the directory exist?
+	if _, err := os.Stat(directory); os.IsNotExist(err) {
+		fmt.Println("utils.Log(): directory ", directory, "does not exist; skipping logging ; message is ", message)
+	}
 
 	// If the file doesn't exist, create it, or append to the file
 	f, err := os.OpenFile(logfile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
