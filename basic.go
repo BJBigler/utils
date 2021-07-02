@@ -118,15 +118,15 @@ func ParseFloat64(candidate string) float64 {
 //2) yyyy-mm-dd hh:mm:ss
 //3)  yyyy-mm-dd hh:mm
 //If all these produce errors, time.Time{} is returned
-func ParseDateMulti(candidate string) (result time.Time) {
+func ParseDateMulti(candidate string, location *time.Location) (result time.Time) {
 
-	result, err := ParseDate([]byte(candidate))
+	result, err := ParseDate([]byte(candidate), location)
 	if err != nil {
 		//yyyy-mm-dd hh:mm:ss
-		result, err = ParseDateTime4(candidate)
+		result, err = ParseDateTime4(candidate, location)
 		if err != nil {
 			//yyyy-mm-dd hh:mm
-			result, err = ParseDateTime5(candidate)
+			result, err = ParseDateTime5(candidate, location)
 			if err != nil {
 				result = time.Time{}
 			}

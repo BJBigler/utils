@@ -74,7 +74,7 @@ func ParseDateUS(candidate string, defaultResult time.Time) (time.Time, error) {
 
 //ParseDate is a fast parse for date []byte formatted as
 //yyyy-mm-dd
-func ParseDate(date []byte) (time.Time, error) {
+func ParseDate(date []byte, location *time.Location) (time.Time, error) {
 	if len(string(date)) != 10 {
 		return time.Time{}, fmt.Errorf(`date "%s" not in right format`, string(date))
 	}
@@ -82,12 +82,12 @@ func ParseDate(date []byte) (time.Time, error) {
 	year := (((int(date[0])-'0')*10+int(date[1])-'0')*10+int(date[2])-'0')*10 + int(date[3]) - '0'
 	month := time.Month((int(date[5])-'0')*10 + int(date[6]) - '0')
 	day := (int(date[8])-'0')*10 + int(date[9]) - '0'
-	return time.Date(year, month, day, 0, 0, 0, 0, time.Local), nil
+	return time.Date(year, month, day, 0, 0, 0, 0, location), nil
 }
 
 //ParseDateTime3 is a fast parse for date-time []byte formatted as
 //yyyy-mm-dd hh:mm:ss
-func ParseDateTime3(date []byte) (time.Time, error) {
+func ParseDateTime3(date []byte, location *time.Location) (time.Time, error) {
 	if len(string(date)) != 19 {
 		return time.Time{}, fmt.Errorf(`date "%s" not in right format`, string(date))
 	}
@@ -98,12 +98,12 @@ func ParseDateTime3(date []byte) (time.Time, error) {
 	hour := (int(date[11])-'0')*10 + int(date[12]) - '0'
 	minute := (int(date[14])-'0')*10 + int(date[15]) - '0'
 	second := (int(date[17])-'0')*10 + int(date[18]) - '0'
-	return time.Date(year, month, day, hour, minute, second, 0, time.UTC), nil
+	return time.Date(year, month, day, hour, minute, second, 0, location), nil
 }
 
 //ParseDateTime4 is a fast parse for date-time string formatted as
 //yyyy-mm-dd hh:mm:ss
-func ParseDateTime4(date string) (time.Time, error) {
+func ParseDateTime4(date string, location *time.Location) (time.Time, error) {
 	if len(date) != 19 {
 		return time.Time{}, fmt.Errorf(`date "%s" not in right format`, date)
 	}
@@ -114,12 +114,12 @@ func ParseDateTime4(date string) (time.Time, error) {
 	hour := (int(date[11])-'0')*10 + int(date[12]) - '0'
 	minute := (int(date[14])-'0')*10 + int(date[15]) - '0'
 	second := (int(date[17])-'0')*10 + int(date[18]) - '0'
-	return time.Date(year, month, day, hour, minute, second, 0, time.UTC), nil
+	return time.Date(year, month, day, hour, minute, second, 0, location), nil
 }
 
 //ParseDateTime5 is a fast parse for date-time string formatted as
 //yyyy-mm-dd hh:mm
-func ParseDateTime5(date string) (time.Time, error) {
+func ParseDateTime5(date string, location *time.Location) (time.Time, error) {
 	if len(date) != 16 {
 		return time.Time{}, fmt.Errorf("date string not 16 characters")
 	}
@@ -129,20 +129,14 @@ func ParseDateTime5(date string) (time.Time, error) {
 	hour := (int(date[11])-'0')*10 + int(date[12]) - '0'
 	minute := (int(date[14])-'0')*10 + int(date[15]) - '0'
 
-	return time.Date(year, month, day, hour, minute, 0, 0, time.UTC), nil
+	return time.Date(year, month, day, hour, minute, 0, 0, location), nil
 }
 
 //ParseDateTime parses the suppied string in location America/New York.
 //This parse is VERY SLOW.
-func ParseDateTime(candidate string, defaultResult time.Time) (time.Time, error) {
+func ParseDateTime(candidate string, defaultResult time.Time, location *time.Location) (time.Time, error) {
 
-	ET, err := time.LoadLocation("America/New_York")
-
-	if err != nil {
-		return defaultResult, err
-	}
-
-	tryCandidate, timeErr := time.ParseInLocation("2006-01-02 15:04:05", candidate, ET)
+	tryCandidate, timeErr := time.ParseInLocation("2006-01-02 15:04:05", candidate, location)
 
 	if timeErr != nil {
 		return defaultResult, timeErr
@@ -159,12 +153,11 @@ func WeeksInMonth(now time.Time) int {
 }
 
 //WeeksInMonth2 ...
-func WeeksInMonth2(now time.Time) int {
+func WeeksInMonth2(now time.Time, location *time.Location) int {
 	dayThreshold := []int{5, 1, 5, 6, 5, 6, 5, 5, 6, 5, 6, 5}
 	currentYear, currentMonth, _ := now.Date()
-	currentLocation := now.Location()
 
-	firstDay := time.Date(currentYear, currentMonth, 1, 0, 0, 0, 0, currentLocation)
+	firstDay := time.Date(currentYear, currentMonth, 1, 0, 0, 0, 0, location)
 	baseWeeks := 5
 	if int(currentMonth) == 2 {
 		// only February can fit in 4 weeks
@@ -191,9 +184,9 @@ func TimeFromFloat(hourMinute float64, dateVal time.Time, et time.Time) (result 
 	minute := float64(60) * fractionOfHour
 
 	if dateVal.After(time.Time{}) { //If we have a non-nil time
-		result = time.Date(dateVal.Year(), dateVal.Month(), dateVal.Day(), int(hour), int(minute), 0, 0, et.Location())
+		result = time.Date(dateVal.Year(), dateVal.Month(), dateVal.Day(), int(hour), int(minute), 0, 0, location)
 	} else { //Use today's date as the date value
-		result = time.Date(et.Year(), et.Month(), et.Day(), int(hour), int(minute), 0, 0, et.Location())
+		result = time.Date(et.Year(), et.Month(), et.Day(), int(hour), int(minute), 0, 0, location)
 	}
 
 	return
