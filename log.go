@@ -14,8 +14,8 @@ func Log(message ...interface{}) {
 
 	pwd, err := os.Getwd()
 	if err != nil {
-		fmt.Println(message)
-		log.Printf(fmt.Sprintf("%v", err))
+		fmt.Println(message...)
+		log.Printf("%v", err)
 		return
 	}
 

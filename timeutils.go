@@ -208,7 +208,7 @@ func TimeToFloat(val string) (float64, error) {
 	timeArray := strings.Split(val, ":")
 
 	if len(timeArray) != 2 {
-		return 0, fmt.Errorf("Cannot parse time into float")
+		return 0, fmt.Errorf("cannot parse time into float")
 	}
 
 	hour := ParseFloat64(timeArray[0])
@@ -342,7 +342,7 @@ func FirstDayOfISOWeek(year int, week int, timezone *time.Location) time.Time {
 	// iterate forward to the first day of the given week
 	for isoWeek < week {
 		date = date.AddDate(0, 0, 7)
-		isoYear, isoWeek = date.ISOWeek()
+		_, isoWeek = date.ISOWeek()
 	}
 
 	return date

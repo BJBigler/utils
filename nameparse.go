@@ -180,7 +180,7 @@ func ParseName(name string) NameParts {
 			p.slot("middle", strings.Join(multiMiddle, " "))
 
 		} else {
-			sort.Sort(sort.IntSlice(notSlotted))
+			sort.Ints(notSlotted)
 			maxNotSlottedIndex := notSlotted[len(notSlotted)-1]
 			p.slot("last", n.SplitName[maxNotSlottedIndex])
 

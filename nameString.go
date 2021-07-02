@@ -27,7 +27,7 @@ func (n *nameString) cleaned() []string {
 func (n *nameString) searchParts(parts []string) int {
 	for i, x := range n.cleaned() {
 		for _, y := range parts {
-			if strings.ToUpper(x) == strings.ToUpper(y) {
+			if strings.EqualFold(x, y) {
 				return i
 			}
 		}

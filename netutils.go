@@ -45,7 +45,7 @@ func GetGoQueryDocumentFromURL(url string) *goquery.Document {
 	}
 	defer resp.Body.Close()
 
-	doc, err3 := goquery.NewDocumentFromResponse(resp)
+	doc, err3 := goquery.NewDocumentFromReader(resp.Body)
 
 	if err3 != nil {
 		Log(err3)
@@ -96,7 +96,7 @@ func GetContent(sourceURL string) ([]byte, error) {
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("Read body: %v", err)
+		return nil, fmt.Errorf("read body: %v", err)
 	}
 
 	return data, nil
@@ -167,11 +167,7 @@ func Join(basePath string, paths ...string) (*url.URL, error) {
 
 //Secure returns false only if the Host is localhost
 func Secure(r *http.Request) bool {
-	if strings.Contains(r.Host, "localhost") {
-		return false
-	}
-	return true
-
+	return strings.Contains(r.Host, "localhost")
 }
 
 //GetIP returns UserIP address

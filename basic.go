@@ -323,7 +323,7 @@ func ToInt64Precision10ForStorage(number decimal.Decimal) int64 {
 //FormatCommas adds commas to a number
 func FormatCommas(num string) string {
 
-	re := regexp.MustCompile("(\\d+)(\\d{3})")
+	re := regexp.MustCompile(`(\d+)(\d{3})`)
 	for {
 		formatted := re.ReplaceAllString(num, "$1,$2")
 		if formatted == num {
