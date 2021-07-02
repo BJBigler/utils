@@ -184,9 +184,9 @@ func TimeFromFloat(hourMinute float64, dateVal time.Time, et time.Time) (result 
 	minute := float64(60) * fractionOfHour
 
 	if dateVal.After(time.Time{}) { //If we have a non-nil time
-		result = time.Date(dateVal.Year(), dateVal.Month(), dateVal.Day(), int(hour), int(minute), 0, 0, location)
+		result = time.Date(dateVal.Year(), dateVal.Month(), dateVal.Day(), int(hour), int(minute), 0, 0, et.Location())
 	} else { //Use today's date as the date value
-		result = time.Date(et.Year(), et.Month(), et.Day(), int(hour), int(minute), 0, 0, location)
+		result = time.Date(et.Year(), et.Month(), et.Day(), int(hour), int(minute), 0, 0, et.Location())
 	}
 
 	return
