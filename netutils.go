@@ -19,7 +19,7 @@ const (
 )
 
 //GetGoQueryDocumentFromURL returns goquery doc from URL
-func GetGoQueryDocumentFromURL(url string) *goquery.Document {
+func GetGoQueryDocumentFromURL(url string) (*goquery.Document, error) {
 
 	timeout := time.Duration(60 * time.Second)
 	cookieJar, _ := cookiejar.New(nil)
@@ -29,7 +29,11 @@ func GetGoQueryDocumentFromURL(url string) *goquery.Document {
 		Jar:     cookieJar,
 	}
 
-	req, _ := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", url, nil)
+
+	if err != nil {
+		return nil, err
+	}
 
 	req.Header.Set("User-Agent", userAgent)
 	req.Header.Set("Accept", "text/html")
@@ -40,19 +44,17 @@ func GetGoQueryDocumentFromURL(url string) *goquery.Document {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		Log(err)
-		return nil
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	doc, err3 := goquery.NewDocumentFromReader(resp.Body)
 
 	if err3 != nil {
-		Log(err3)
-		return nil
+		return nil, err
 	}
 
-	return doc
+	return doc, nil
 }
 
 //GetGoQueryDocumentFromFile returns goquery doc from URL
@@ -112,7 +114,7 @@ func GetImagesFromURL(source string) []string {
 		return result
 	}
 
-	doc := GetGoQueryDocumentFromURL(parseURL.RawPath)
+	doc, _ := GetGoQueryDocumentFromURL(parseURL.RawPath)
 
 	doc.Find("img").Each(func(i int, img *goquery.Selection) {
 		val, exists := img.Attr("src")
