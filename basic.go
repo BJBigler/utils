@@ -598,3 +598,14 @@ func EmojiClockFace(t time.Time) string {
 func ZeroPad64(val int64) string {
 	return fmt.Sprintf("%02d", val)
 }
+
+//AppendIfMissing appends a string to a string slice if
+//not already thre
+func AppendIfMissing(slice []string, s string) []string {
+	for _, element := range slice {
+		if element == s {
+			return slice
+		}
+	}
+	return append(slice, s)
+}
