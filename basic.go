@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"math/rand"
 	"net/mail"
@@ -14,7 +15,6 @@ import (
 	"time"
 
 	"github.com/shopspring/decimal"
-	"golang.org/x/net/context"
 )
 
 //Alpha returns A-Z, capitalized
@@ -608,4 +608,17 @@ func AppendIfMissing(slice []string, s string) []string {
 		}
 	}
 	return append(slice, s)
+}
+
+//RemoveItem removes a string from a slice
+func RemoveItem(slice []string, s string) []string {
+	result := []string{}
+	for _, element := range slice {
+		if element == s {
+			continue
+		}
+
+		result = append(result, element)
+	}
+	return result
 }
