@@ -340,17 +340,28 @@ func PrepForDecimalization(num string) string {
 	return num
 }
 
-//GenerateRandom returns a 7-digit pseudorandom number
+//GenerateRandom returns a 7-digit pseudorandom number;
+//NOTE: PLEASE SEED THE RANDOM GENERATOR BEFORE CALLING
 func GenerateRandom() int64 {
-	rand.Seed(time.Now().Unix())
+	//rand.Seed(time.Now().Unix())
+	//Replaced with suggestion from here:
+	//https://stackoverflow.com/questions/12321133/how-to-properly-seed-random-number-generator
+	//Thus, you need to seed the generator before calling this func.
+	//Seed should be when the app starts, thus in main.go
+
 	min := 1000000
 	max := 9999999
 	return int64(rand.Intn(max-min) + min)
 }
 
 //GenerateRandom returns a pseudorandom whole number in the provided range
+//NOTE: PLEASE SEED THE RANDOM GENERATOR BEFORE CALLING
 func GenerateRandomFromRange(min, max int) int64 {
-	rand.Seed(time.Now().Unix())
+	//rand.Seed(time.Now().Unix())
+	//Replaced with suggestion from here:
+	//https://stackoverflow.com/questions/12321133/how-to-properly-seed-random-number-generator
+	//Thus, you need to seed the generator before calling this func.
+	//Seed should be when the app starts, thus in main.go
 	return int64(rand.Intn(max-min) + min)
 }
 
