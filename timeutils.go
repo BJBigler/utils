@@ -368,11 +368,23 @@ func FirstDayOfISOWeek(year int, week int, timezone *time.Location) time.Time {
 //it with *date* (can be IsZero, which then uses today's date),
 //and returns a time.Time object
 func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) (time.Time, error) {
-	if len(atTime) != 4 {
-		return time.Time{}, fmt.Errorf("time string supplied (%s) must have 4 characters", atTime)
+
+	var (
+		hour   int
+		minute int
+	)
+
+	//Try splitting the time at a colon, e.g, 14:15
+	split := strings.Split(atTime, ":")
+	if len(split) == 2 {
+		hour = ParseInt(split[0], 0)
+		minute = ParseInt(split[0], 0)
+	} else if len(atTime) == 4 {
+		hour = ParseInt(atTime[0:2], 0)
+		minute = ParseInt(atTime[3:], 0)
+	} else {
+		return time.Time{}, fmt.Errorf("error parsing date time string supplied (%s); must have 4 characters", atTime)
 	}
-	hour := ParseInt(atTime[0:2], 0)
-	minute := ParseInt(atTime[3:], 0)
 
 	if date.IsZero() {
 		date = time.Now().In(loc)
