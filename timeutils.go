@@ -25,6 +25,21 @@ func GetMonthStartAndEnd(yearMonth string) (startDte time.Time, endDte time.Time
 	return startDte, endDte
 }
 
+//GetMonthEnd returns the end of the month when fed, e.g., 20187 => 7/31/2018
+func GetMonthEnd(yearMonth string) (endDate time.Time) {
+
+	year := time.Now().Year()
+	month := int(time.Now().Month())
+
+	if len(yearMonth) > 4 {
+		year = ParseInt(yearMonth[0:4], 0)
+		month = ParseInt(yearMonth[4:], 0)
+	}
+
+	startDte := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
+	return startDte.AddDate(0, 1, -1)
+}
+
 // DaysIn returns the number of days in a month for a given year.
 func DaysIn(m time.Month, year int) int {
 	// This is equivalent to time.daysIn(m, year).
@@ -254,17 +269,17 @@ func AcademicYear(dte time.Time) int64 {
 
 	m := dte.Month()
 
-	if m > time.June {
+	if m > time.July {
 		ay++
 	}
 	return ay
 }
 
-//EndOfAcademicYear ...
+//EndOfAcademicYear is
 func EndOfAcademicYear(dte time.Time, loc *time.Location) time.Time {
 	year := int(AcademicYear(dte))
 
-	return time.Date(year, 6, 30, 23, 59, 59, 999, loc)
+	return time.Date(year, 7, 31, 23, 59, 59, 999, loc)
 }
 
 //AcademicYears returns a slice of ints
@@ -352,7 +367,10 @@ func FirstDayOfISOWeek(year int, week int, timezone *time.Location) time.Time {
 //an HTML time field, combines
 //it with *date* (can be IsZero, which then uses today's date),
 //and returns a time.Time object
-func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) time.Time {
+func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) (time.Time, err) {
+	if len(atTime) != 4 {
+		return time.Time{}, fmt.Errorf("time string supplied (%s) must have 4 characters", atTime)
+	}
 	hour := ParseInt(atTime[0:2], 0)
 	minute := ParseInt(atTime[3:], 0)
 
@@ -361,7 +379,7 @@ func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) ti
 	}
 	//We just need to store the time, easy enough to do in a time/date field,
 	//so use today's date for the year, month, and day values
-	return time.Date(date.Year(), date.Month(), date.Day(), hour, minute, 0, 0, loc)
+	return time.Date(date.Year(), date.Month(), date.Day(), hour, minute, 0, 0, loc), nil
 
 }
 
