@@ -367,7 +367,7 @@ func FirstDayOfISOWeek(year int, week int, timezone *time.Location) time.Time {
 //an HTML time field, combines
 //it with *date* (can be IsZero, which then uses today's date),
 //and returns a time.Time object
-func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) (time.Time, err) {
+func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) (time.Time, error) {
 	if len(atTime) != 4 {
 		return time.Time{}, fmt.Errorf("time string supplied (%s) must have 4 characters", atTime)
 	}
