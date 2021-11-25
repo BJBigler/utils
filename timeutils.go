@@ -378,7 +378,7 @@ func MakeTimeFromTimeField(atTime string, date time.Time, loc *time.Location) (t
 	split := strings.Split(atTime, ":")
 	if len(split) == 2 {
 		hour = ParseInt(split[0], 0)
-		minute = ParseInt(split[0], 0)
+		minute = ParseInt(split[1], 0)
 	} else if len(atTime) == 4 {
 		hour = ParseInt(atTime[0:2], 0)
 		minute = ParseInt(atTime[3:], 0)
