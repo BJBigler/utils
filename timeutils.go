@@ -342,8 +342,8 @@ func FirstDayOfISOWeek(year int, week int, timezone *time.Location) time.Time {
 	date := time.Date(year, 0, 0, 0, 0, 0, 0, timezone)
 	isoYear, isoWeek := date.ISOWeek()
 
-	// iterate back to Sunday
-	for date.Weekday() != time.Sunday {
+	// iterate back to Monday -- ISO weeks begin on Monday by definition
+	for date.Weekday() != time.Monday {
 		date = date.AddDate(0, 0, -1)
 		isoYear, isoWeek = date.ISOWeek()
 	}
