@@ -139,6 +139,7 @@ func GenerateRandomAlphaNumeric(n int) string {
 func ReplaceAccents(input string) string {
 
 	input = strings.Replace(input, "æ", "ae", -1)
+	input = strings.Replace(input, "ł", "l", -1) //Convert Polish "l"
 
 	// isMn := func(r rune) bool {
 	// 	return unicode.Is(unicode.Mn, r) // Mn: nonspacing marks
