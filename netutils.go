@@ -169,7 +169,7 @@ func Join(basePath string, paths ...string) (*url.URL, error) {
 
 //Secure returns false only if the Host is localhost
 func Secure(r *http.Request) bool {
-	return strings.Contains(r.Host, "localhost")
+	return !strings.Contains(r.Host, "localhost")
 }
 
 //GetIP returns UserIP address
