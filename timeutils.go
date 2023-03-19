@@ -40,6 +40,21 @@ func GetMonthEnd(yearMonth string) (endDate time.Time) {
 	return startDte.AddDate(0, 1, -1)
 }
 
+//GetMonthEnd returns the end of the month when fed, e.g., 20187 => 7/31/2018
+func GetMonthEndIn(yearMonth string, location *time.Location) (endDate time.Time) {
+
+	year := time.Now().In(location).Year()
+	month := int(time.Now().In(location).Month())
+
+	if len(yearMonth) > 4 {
+		year = ParseInt(yearMonth[0:4], 0)
+		month = ParseInt(yearMonth[4:], 0)
+	}
+
+	startDte := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, location)
+	return startDte.AddDate(0, 1, -1)
+}
+
 // DaysIn returns the number of days in a month for a given year.
 func DaysIn(m time.Month, year int) int {
 	// This is equivalent to time.daysIn(m, year).
