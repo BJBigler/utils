@@ -7,5 +7,6 @@ require (
 	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/shopspring/decimal v1.3.1
+	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/text v0.9.0
 )
