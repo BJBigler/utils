@@ -17,12 +17,12 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-//Alpha returns A-Z, capitalized
+// Alpha returns A-Z, capitalized
 func Alpha() []string {
 	return []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
 }
 
-//ParseInt ...
+// ParseInt ...
 func ParseInt(candidate string, defaultResult int) int {
 
 	result, err := strconv.Atoi(candidate)
@@ -34,7 +34,7 @@ func ParseInt(candidate string, defaultResult int) int {
 	return result
 }
 
-//ParseInt32 ...
+// ParseInt32 ...
 func ParseInt32(candidate string, defaultResult int32) int32 {
 
 	result, err := strconv.ParseInt(candidate, 10, 32)
@@ -46,7 +46,7 @@ func ParseInt32(candidate string, defaultResult int32) int32 {
 	return int32(result)
 }
 
-//ParseInt64 ...
+// ParseInt64 ...
 func ParseInt64(candidate string, defaultResult int64) int64 {
 
 	candidate = strings.Replace(candidate, "–", "-", -1)
@@ -61,7 +61,7 @@ func ParseInt64(candidate string, defaultResult int64) int64 {
 	return result
 }
 
-//ParseInt64Err returns an error if parsing fails
+// ParseInt64Err returns an error if parsing fails
 func ParseInt64Err(candidate string) (int64, error) {
 
 	candidate = strings.Replace(candidate, "–", "-", -1)
@@ -76,7 +76,7 @@ func ParseInt64Err(candidate string) (int64, error) {
 	return result, nil
 }
 
-//ParseFloat32 ...
+// ParseFloat32 ...
 func ParseFloat32(candidate string) float32 {
 
 	candidate = strings.TrimSpace(candidate)
@@ -94,7 +94,7 @@ func ParseFloat32(candidate string) float32 {
 	return float32(result)
 }
 
-//ParseFloat64 ...
+// ParseFloat64 ...
 func ParseFloat64(candidate string) float64 {
 
 	candidate = strings.TrimSpace(candidate)
@@ -112,12 +112,12 @@ func ParseFloat64(candidate string) float64 {
 	return result
 }
 
-//ParseDateMulti tries to parse the provided value using
-//three formats:
-//1) yyyy-mm-dd
-//2) yyyy-mm-dd hh:mm:ss
-//3)  yyyy-mm-dd hh:mm
-//If all these produce errors, time.Time{} is returned
+// ParseDateMulti tries to parse the provided value using
+// three formats:
+// 1) yyyy-mm-dd
+// 2) yyyy-mm-dd hh:mm:ss
+// 3)  yyyy-mm-dd hh:mm
+// If all these produce errors, time.Time{} is returned
 func ParseDateMulti(candidate string, location *time.Location) (result time.Time) {
 
 	result, err := ParseDate([]byte(candidate), location)
@@ -136,13 +136,13 @@ func ParseDateMulti(candidate string, location *time.Location) (result time.Time
 	return
 }
 
-//IntToString ...
+// IntToString ...
 func IntToString(val int) string {
 
 	return strconv.Itoa(val)
 }
 
-//ParseBool ...
+// ParseBool ...
 func ParseBool(val string) bool {
 
 	val = strings.ToLower(val)
@@ -156,13 +156,13 @@ func ParseBool(val string) bool {
 
 }
 
-//Int64ToString ...
+// Int64ToString ...
 func Int64ToString(val int64) string {
 
 	return strconv.FormatInt(val, 10)
 }
 
-//OnToBool ...
+// OnToBool ...
 func OnToBool(val string) bool {
 
 	val = strings.ToLower(val)
@@ -174,7 +174,7 @@ func OnToBool(val string) bool {
 	return false
 }
 
-//OnToInt returns 1 if on, 0 otherwise
+// OnToInt returns 1 if on, 0 otherwise
 func OnToInt(val string) int64 {
 	if strings.ToLower(val) == "on" {
 		return 1
@@ -183,7 +183,7 @@ func OnToInt(val string) int64 {
 	return 0
 }
 
-//StringToBool returns true if "true", "1", "on", or "yes"
+// StringToBool returns true if "true", "1", "on", or "yes"
 func StringToBool(val string) bool {
 	val = strings.ToLower(val)
 
@@ -208,9 +208,9 @@ func StringToBool(val string) bool {
 	return false
 }
 
-//ValToBool returns true if val is "on",
-//"true", or "1"; false for all others.
-//val is converted to lower before checking.
+// ValToBool returns true if val is "on",
+// "true", or "1"; false for all others.
+// val is converted to lower before checking.
 func ValToBool(val string) bool {
 	val = strings.ToLower(val)
 
@@ -221,7 +221,7 @@ func ValToBool(val string) bool {
 	return false
 }
 
-//RemovePunctuation ...
+// RemovePunctuation ...
 func RemovePunctuation(input string) string {
 
 	var out strings.Builder
@@ -260,7 +260,7 @@ func RemovePunctuation(input string) string {
 
 }
 
-//RemoveSpaces trims spaces around a string, and removes two+ spaces inside string
+// RemoveSpaces trims spaces around a string, and removes two+ spaces inside string
 func RemoveSpaces(input string) string {
 
 	reLeadcloseWhtsp := regexp.MustCompile(`^[\s\p{Zs}]+|[\s\p{Zs}]+$`)
@@ -273,7 +273,7 @@ func RemoveSpaces(input string) string {
 
 }
 
-//IsUpperCaseWord checks if a word has all uppercase characters
+// IsUpperCaseWord checks if a word has all uppercase characters
 func IsUpperCaseWord(word string) bool {
 
 	for _, char := range word {
@@ -285,7 +285,7 @@ func IsUpperCaseWord(word string) bool {
 	return true
 }
 
-//ToTitleCase returns the input string in Title Case
+// ToTitleCase returns the input string in Title Case
 func ToTitleCase(ctx context.Context, phrase string) string {
 	if IsUpperCaseWord(phrase) {
 		//The entire name is in uppercase.
@@ -298,8 +298,8 @@ func ToTitleCase(ctx context.Context, phrase string) string {
 	return phrase
 }
 
-//ToInt64ForStorage multiplies the input number by 10^precision
-//and returns an int64 for Datastore persist
+// ToInt64ForStorage multiplies the input number by 10^precision
+// and returns an int64 for Datastore persist
 func ToInt64ForStorage(number decimal.Decimal, precision int32) int64 {
 
 	decimalMultiplier := decimal.New(1, precision)
@@ -309,8 +309,8 @@ func ToInt64ForStorage(number decimal.Decimal, precision int32) int64 {
 	return number.IntPart()
 }
 
-//ToInt64Precision10ForStorage multiplies the input number by 10^10
-//and returns an int64 for Datastore persist
+// ToInt64Precision10ForStorage multiplies the input number by 10^10
+// and returns an int64 for Datastore persist
 func ToInt64Precision10ForStorage(number decimal.Decimal) int64 {
 
 	decimalMultiplier := decimal.New(1, 10)
@@ -320,7 +320,7 @@ func ToInt64Precision10ForStorage(number decimal.Decimal) int64 {
 	return number.IntPart()
 }
 
-//FormatCommas adds commas to a number
+// FormatCommas adds commas to a number
 func FormatCommas(num string) string {
 
 	re := regexp.MustCompile(`(\d+)(\d{3})`)
@@ -333,15 +333,15 @@ func FormatCommas(num string) string {
 	}
 }
 
-//PrepForDecimalization preps string for decimalization.
+// PrepForDecimalization preps string for decimalization.
 func PrepForDecimalization(num string) string {
 	num = strings.Replace(num, ",", "", -1)
 	num = strings.TrimSpace(num)
 	return num
 }
 
-//GenerateRandom returns a 7-digit pseudorandom number;
-//NOTE: PLEASE SEED THE RANDOM GENERATOR BEFORE CALLING
+// GenerateRandom returns a 7-digit pseudorandom number;
+// NOTE: PLEASE SEED THE RANDOM GENERATOR BEFORE CALLING
 func GenerateRandom() int64 {
 	//rand.Seed(time.Now().Unix())
 	//Replaced with suggestion from here:
@@ -354,8 +354,8 @@ func GenerateRandom() int64 {
 	return int64(rand.Intn(max-min) + min)
 }
 
-//GenerateRandom returns a pseudorandom whole number in the provided range
-//NOTE: PLEASE SEED THE RANDOM GENERATOR BEFORE CALLING
+// GenerateRandom returns a pseudorandom whole number in the provided range
+// NOTE: PLEASE SEED THE RANDOM GENERATOR BEFORE CALLING
 func GenerateRandomFromRange(min, max int) int64 {
 	//rand.Seed(time.Now().Unix())
 	//Replaced with suggestion from here:
@@ -387,32 +387,32 @@ func GenerateRandomFromRange(min, max int) int64 {
 // 	return string(body)
 // }
 
-//GetIDFromURL returns ID from a URL fragment, e.g.
+// GetIDFromURL returns ID from a URL fragment, e.g.
 // the URL http://abc.com/seminar/1234 would return 1234.
-//Note that the ID has to be numerical
+// Note that the ID has to be numerical
 func GetIDFromURL(url *url.URL) int64 {
 	lastPart := GetStringIDFromURL(url)
 	return ParseInt64(lastPart, 0)
 }
 
-//GetStringIDFromURL gets the last text past the final
-//slash in a URL
+// GetStringIDFromURL gets the last text past the final
+// slash in a URL
 func GetStringIDFromURL(url *url.URL) string {
 	parts := strings.Split(url.Path, "/")
 	lastPart := len(parts) - 1
 	return parts[lastPart]
 }
 
-//GetLastPart gets the last text past the final
-//delimiter
+// GetLastPart gets the last text past the final
+// delimiter
 func GetLastPart(path, delimiter string) string {
 	parts := strings.Split(path, delimiter)
 	lastPart := len(parts) - 1
 	return parts[lastPart]
 }
 
-//Int64ToCSV converts a list of int64s
-//to CSV
+// Int64ToCSV converts a list of int64s
+// to CSV
 func Int64ToCSV(vals []int64) string {
 	var IDs []string
 	for _, i := range vals {
@@ -422,7 +422,7 @@ func Int64ToCSV(vals []int64) string {
 	return strings.Join(IDs, ", ")
 }
 
-//SplitSubN splits a string by length
+// SplitSubN splits a string by length
 func SplitSubN(s string, numberOfCharactersPerLine int) []string {
 	n := numberOfCharactersPerLine
 
@@ -444,10 +444,10 @@ func SplitSubN(s string, numberOfCharactersPerLine int) []string {
 	return subs
 }
 
-//GetConjunction is used to make a list human-readable with a comma and/or the
-//supplied conjunction. For example, if the slice ["jack","jane","mary"]
-//should be formatted "jack, jane, and mary" or jack, jane, or mary" --
-//GetConjuction will supply the two commas and an 'and' or 'or' as fed to it.
+// GetConjunction is used to make a list human-readable with a comma and/or the
+// supplied conjunction. For example, if the slice ["jack","jane","mary"]
+// should be formatted "jack, jane, and mary" or jack, jane, or mary" --
+// GetConjuction will supply the two commas and an 'and' or 'or' as fed to it.
 func GetConjunction(cntTotal int, current int, conjunction string) string {
 
 	if cntTotal == 2 && current == 0 {
@@ -464,7 +464,7 @@ func GetConjunction(cntTotal int, current int, conjunction string) string {
 	return ""
 }
 
-//IsNumeric removes commas, trims spaces, and then attempts to parse as float.
+// IsNumeric removes commas, trims spaces, and then attempts to parse as float.
 func IsNumeric(s string) bool {
 
 	s = strings.Replace(s, ",", "", -1)
@@ -474,10 +474,10 @@ func IsNumeric(s string) bool {
 	return err == nil
 }
 
-//ValidateEmail checks email for ...
-//1) More than 0 length;
-//2) Contains the provided suffix (e.g., princeton.edu); and
-//3) Properly parsed by Go's built-in mail.ParseAddress;
+// ValidateEmail checks email for ...
+// 1) More than 0 length;
+// 2) Contains the provided suffix (e.g., princeton.edu); and
+// 3) Properly parsed by Go's built-in mail.ParseAddress;
 func ValidateEmail(s, domain string) (bool, error) {
 	if len(s) == 0 {
 		return false, fmt.Errorf("email is blank")
@@ -498,7 +498,7 @@ func ValidateEmail(s, domain string) (bool, error) {
 	return true, nil
 }
 
-//MakeSliceFromRange returns a slice of integers in the range 'from'-'to' inclusive
+// MakeSliceFromRange returns a slice of integers in the range 'from'-'to' inclusive
 func MakeSliceFromRange(fromVal, toVal int) (result []int) {
 	for i := fromVal; i < toVal; i++ {
 		result = append(result, i)
@@ -507,7 +507,7 @@ func MakeSliceFromRange(fromVal, toVal int) (result []int) {
 	return
 }
 
-//SumFloat64 ...
+// SumFloat64 ...
 func SumFloat64(vals []float64) (result float64) {
 	for _, v := range vals {
 		result += v
@@ -515,7 +515,7 @@ func SumFloat64(vals []float64) (result float64) {
 	return result
 }
 
-//SumInt64 ...
+// SumInt64 ...
 func SumInt64(vals []int64) (result int64) {
 	for _, v := range vals {
 		result += v
@@ -523,9 +523,9 @@ func SumInt64(vals []int64) (result int64) {
 	return result
 }
 
-//AlphaIndex returns the 0-based index
-//where a letter appears in the English alphabet.
-//For example, "E" would return 5.
+// AlphaIndex returns the 0-based index
+// where a letter appears in the English alphabet.
+// For example, "E" would return 5.
 func AlphaIndex(ltr string) int {
 	for i, l := range Alpha() {
 		if l != strings.ToLower(ltr) {
@@ -536,9 +536,9 @@ func AlphaIndex(ltr string) int {
 	return -1
 }
 
-//EmojiClockFace returns the clock face for
-//times from 8:00 through 21:30 in half-hour
-//increments. The default is 2:00
+// EmojiClockFace returns the clock face for
+// times from 8:00 through 21:30 in half-hour
+// increments. The default is 2:00
 func EmojiClockFace(t time.Time) string {
 
 	clockEmoji := "🕑"
@@ -605,13 +605,13 @@ func EmojiClockFace(t time.Time) string {
 	return clockEmoji
 }
 
-//ZeroPad64 adds a zero in front of *val*
+// ZeroPad64 adds a zero in front of *val*
 func ZeroPad64(val int64) string {
 	return fmt.Sprintf("%02d", val)
 }
 
-//AppendIfMissing appends a string to a string slice if
-//not already thre
+// AppendIfMissing appends a string to a string slice if
+// not already thre
 func AppendIfMissing(slice []string, s string) []string {
 	for _, element := range slice {
 		if element == s {
@@ -621,7 +621,18 @@ func AppendIfMissing(slice []string, s string) []string {
 	return append(slice, s)
 }
 
-//RemoveItem removes a string from a slice
+// AppendIfMissing appends a string to a string slice if
+// not already thre
+func AppendIfMissingIn64(slice []int64, s int64) []int64 {
+	for _, element := range slice {
+		if element == s {
+			return slice
+		}
+	}
+	return append(slice, s)
+}
+
+// RemoveItem removes a string from a slice
 func RemoveItem(slice []string, s string) []string {
 	result := []string{}
 	for _, element := range slice {
