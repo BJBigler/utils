@@ -611,7 +611,7 @@ func ZeroPad64(val int64) string {
 }
 
 // AppendIfMissing appends a string to a string slice if
-// not already thre
+// not already there
 func AppendIfMissing(slice []string, s string) []string {
 	for _, element := range slice {
 		if element == s {
@@ -621,9 +621,9 @@ func AppendIfMissing(slice []string, s string) []string {
 	return append(slice, s)
 }
 
-// AppendIfMissing appends a string to a string slice if
-// not already thre
-func AppendIfMissingIn64(slice []int64, s int64) []int64 {
+// AppendIfMissingInt64 appends an int64 to a int64 slice if
+// not already there
+func AppendIfMissingInt64(slice []int64, s int64) []int64 {
 	for _, element := range slice {
 		if element == s {
 			return slice
