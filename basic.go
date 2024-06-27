@@ -22,7 +22,10 @@ func Alpha() []string {
 	return []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
 }
 
-// ParseInt ...
+// ParseInt parses *candidate* using
+// strconv.Atoi, and returns the converted result
+// if there is no error. However, if there's an error,
+// the *defaultResult* is returned instead.
 func ParseInt(candidate string, defaultResult int) int {
 
 	result, err := strconv.Atoi(candidate)
@@ -34,7 +37,10 @@ func ParseInt(candidate string, defaultResult int) int {
 	return result
 }
 
-// ParseInt32 ...
+// ParseInt32 parses *candidate* using
+// strconv.ParseInt, and returns the converted result
+// if there is no error. However, if there's an error,
+// the *defaultResult* is returned instead.
 func ParseInt32(candidate string, defaultResult int32) int32 {
 
 	result, err := strconv.ParseInt(candidate, 10, 32)
@@ -46,7 +52,12 @@ func ParseInt32(candidate string, defaultResult int32) int32 {
 	return int32(result)
 }
 
-// ParseInt64 ...
+// ParseInt32 parses *candidate* using
+// strconv.ParseInt, and returns the converted result
+// if there is no error. However, if there's an error,
+// the *defaultResult* is returned instead.
+// The call does some basic string manipulation, replacing em and en
+// dashes with hyphens.
 func ParseInt64(candidate string, defaultResult int64) int64 {
 
 	candidate = strings.Replace(candidate, "–", "-", -1)
