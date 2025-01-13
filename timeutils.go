@@ -65,13 +65,17 @@ func DaysIn(m time.Month, year int) int {
 // Used to provide a date for to get a mutual fund price. It has
 // to be before today and not a weekend to have a price.
 func GetNearestWeekday(dte time.Time) time.Time {
-	//Start with yesterday
-	dte = dte.Add(-24 * time.Hour)
 
-	for dte.Weekday() == 6 || dte.Weekday() == 7 {
-		dte = dte.Add(-24 * time.Hour)
+	if dte.Weekday() == 1 { //This is Monday, return last Friday
+		return dte.Add(-72 * time.Hour) //Three days ago
 	}
-	return dte
+
+	if dte.Weekday() == 7 { //This is Sunday, return last Friday
+		return dte.Add(-48 * time.Hour) //Three days ago
+	}
+
+	return dte.Add(-24 * time.Hour) // return yesterday
+
 }
 
 // DateEqual compares date equality regardless of the time
