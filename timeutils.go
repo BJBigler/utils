@@ -270,8 +270,8 @@ func EasternTime() time.Time {
 
 // CurrentAcademicYear returns Now()'s
 // academic year
-func CurrentAcademicYear() int64 {
-	return AcademicYear(time.Now())
+func CurrentAcademicYear(monthYearEnd time.Month) int64 {
+	return AcademicYear(time.Now(), monthYearEnd)
 }
 
 // AcademicYearView returns 2019-20 when given 2020.
@@ -283,29 +283,36 @@ func AcademicYearView(academicYear int64) string {
 
 // AcademicYear returns the academic year of *dte*
 // Assumes a July 1 beginning year
-func AcademicYear(dte time.Time) int64 {
+func AcademicYear(dte time.Time, monthYearEnd time.Month) int64 {
 	ay := int64(dte.Year())
 
 	m := dte.Month()
 
-	if m > time.July {
+	if m > monthYearEnd {
 		ay++
 	}
 	return ay
 }
 
 // EndOfAcademicYear is
-func EndOfAcademicYear(dte time.Time, loc *time.Location) time.Time {
-	year := int(AcademicYear(dte))
+func EndOfAcademicYear(dte time.Time, monthYearEnd time.Month, loc *time.Location) time.Time {
 
-	return time.Date(year, 7, 31, 23, 59, 59, 999, loc)
+	currentAcademicYear := int(AcademicYear(dte, monthYearEnd))
+
+	//Calculate the first day of the academic year's final month
+	firstDateOfFinalMonth := time.Date(currentAcademicYear, monthYearEnd+1, 01, 00, 00, 00, 000, loc)
+	//Add one month to the first day
+	nextMonth := firstDateOfFinalMonth.AddDate(0, 1, 0).In(loc)
+	//Return the day before
+	return nextMonth.AddDate(0, 0, -1)
+
 }
 
 // AcademicYears returns a slice of ints
 // from *start* to dte
-func AcademicYears(start int64, dte time.Time) (result []int64) {
+func AcademicYears(start int64, dte time.Time, monthYearEnd time.Month) (result []int64) {
 
-	for i := AcademicYear(dte); i > start; i-- {
+	for i := AcademicYear(dte, monthYearEnd); i > start; i-- {
 		result = append(result, i)
 	}
 
@@ -444,9 +451,9 @@ func IsToday(dte time.Time) bool {
 
 // AcademicYearsAgo returns now.Year - n + 1
 // to account for full academic years
-func AcademicYearsAgo(n int64) int64 {
+func AcademicYearsAgo(n int64, monthYearEnd time.Month) int64 {
 
-	thisYear := AcademicYear(time.Now())
+	thisYear := AcademicYear(time.Now(), monthYearEnd)
 
 	//Why + 1. Suppose we're in the 2019 academic year. Ten years
 	//ago is 2009, but not quite, because
