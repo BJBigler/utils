@@ -281,9 +281,10 @@ func AcademicYearView(academicYear int64) string {
 	return fmt.Sprintf("%d-%d", start, academicYear)
 }
 
-// AcademicYear returns the academic year of *dte*
-// Assumes a July 1 beginning year
+// AcademicYear returns the academic year of *dte*. If monthYearEnd is 6 (June, in North America), and
+// the current date is anywhere between July 1 2024 and June 20 2025, the returned academic year is 2025
 func AcademicYear(dte time.Time, monthYearEnd time.Month) int64 {
+
 	ay := int64(dte.Year())
 
 	m := dte.Month()
@@ -297,14 +298,23 @@ func AcademicYear(dte time.Time, monthYearEnd time.Month) int64 {
 // EndOfAcademicYear is
 func EndOfAcademicYear(dte time.Time, monthYearEnd time.Month, loc *time.Location) time.Time {
 
+	firstDateOfNextYear := BeginAcademicYear(dte, monthYearEnd, loc).AddDate(1, 0, 0)
+	return firstDateOfNextYear.AddDate(0, 0, -1).In(loc)
+
+}
+
+// BeginAcademicYear is
+func BeginAcademicYear(dte time.Time, monthYearEnd time.Month, loc *time.Location) time.Time {
+
+	yearBeginMonth := monthYearEnd + 1
+	if monthYearEnd == 12 {
+		yearBeginMonth = 1
+	}
+
 	currentAcademicYear := int(AcademicYear(dte, monthYearEnd))
 
-	//Calculate the first day of the academic year's final month
-	firstDateOfFinalMonth := time.Date(currentAcademicYear, monthYearEnd+1, 01, 00, 00, 00, 000, loc)
-	//Add one month to the first day
-	nextMonth := firstDateOfFinalMonth.AddDate(0, 1, 0).In(loc)
-	//Return the day before
-	return nextMonth.AddDate(0, 0, -1)
+	//Calculate the first day of the academic year
+	return time.Date(currentAcademicYear, yearBeginMonth, 01, 00, 00, 00, 000, loc)
 
 }
 
