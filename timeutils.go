@@ -314,7 +314,7 @@ func BeginAcademicYear(dte time.Time, monthYearEnd time.Month, loc *time.Locatio
 	currentAcademicYear := int(AcademicYear(dte, monthYearEnd))
 
 	//Calculate the first day of the academic year
-	return time.Date(currentAcademicYear, yearBeginMonth, 01, 00, 00, 00, 000, loc)
+	return time.Date(currentAcademicYear-1, yearBeginMonth, 01, 00, 00, 00, 000, loc)
 
 }
 
