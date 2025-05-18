@@ -296,7 +296,7 @@ func AcademicYear(dte time.Time, monthYearEnd time.Month) int64 {
 }
 
 // EndOfAcademicYear is
-func EndOfAcademicYear(dte time.Time, monthYearEnd time.Month, loc *time.Location) time.Time {
+func EndAcademicYear(dte time.Time, monthYearEnd time.Month, loc *time.Location) time.Time {
 
 	firstDateOfNextYear := BeginAcademicYear(dte, monthYearEnd, loc).AddDate(1, 0, 0)
 	return firstDateOfNextYear.AddDate(0, 0, -1).In(loc)
