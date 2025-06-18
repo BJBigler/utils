@@ -12,16 +12,16 @@ import (
 	"golang.org/x/text/unicode/norm"
 )
 
-//Tokenize returns a slice of unique "words" of *minLength*
-//from the given string *args". The tokenization proceeds
-//in two ways: 1) words into "phrases" and 2) words into
-//"letters". The phrases are full words recombined into
-//searchable phrases; e.g., "Our Lady of Los Angeles" becomes
-//our, our lady, ..., Los, Los Angeles.
-//The letters are strings starting from the beginning of
-//each term. For example, if the terms
-//supplied are "the thames", and the minimum length was 2,
-//the result would be {th, the, tha, tham, thame, thames}
+// Tokenize returns a slice of unique "words" of *minLength*
+// from the given string *args". The tokenization proceeds
+// in two ways: 1) words into "phrases" and 2) words into
+// "letters". The phrases are full words recombined into
+// searchable phrases; e.g., "Our Lady of Los Angeles" becomes
+// our, our lady, ..., Los, Los Angeles.
+// The letters are strings starting from the beginning of
+// each term. For example, if the terms
+// supplied are "the thames", and the minimum length was 2,
+// the result would be {th, the, tha, tham, thame, thames}
 func Tokenize(minLength int, terms ...string) []string {
 
 	//Use a map to enforce term uniqueness
@@ -71,11 +71,11 @@ func Tokenize(minLength int, terms ...string) []string {
 	return result
 }
 
-//TokenizeWords splits a phrase into words and returns
-//phrases 1 .. n, 2 .. n. For example, "General Smith of Los Angeles"
-//would return:
-//General, General Smith, ..., Smith, Smith of, ..., of, of Los, ...,
-//Los, Los Angeles
+// TokenizeWords splits a phrase into words and returns
+// phrases 1 .. n, 2 .. n. For example, "General Smith of Los Angeles"
+// would return:
+// General, General Smith, ..., Smith, Smith of, ..., of, of Los, ...,
+// Los, Los Angeles
 func TokenizeWords(term string) (result []string) {
 	term = strings.ToLower(term)
 
@@ -115,7 +115,7 @@ const (
 
 var src = rand.NewSource(time.Now().UnixNano())
 
-//GenerateRandomAlphaNumeric ...
+// GenerateRandomAlphaNumeric ...
 func GenerateRandomAlphaNumeric(n int) string {
 	sb := strings.Builder{}
 	sb.Grow(n)
@@ -135,7 +135,7 @@ func GenerateRandomAlphaNumeric(n int) string {
 	return sb.String()
 }
 
-//ReplaceAccents replaces accented characters with close eqivalents
+// ReplaceAccents replaces accented characters with close eqivalents
 func ReplaceAccents(input string) string {
 
 	input = strings.Replace(input, "æ", "ae", -1)
@@ -167,8 +167,8 @@ func ReplaceAccents(input string) string {
 
 }
 
-//Conjoin joins a string with commas and the conjunction,
-//e.g., ["bill", "sue", "jill"] => "bill, sue, and jill"
+// Conjoin joins a string with commas and the conjunction,
+// e.g., ["bill", "sue", "jill"] => "bill, sue, and jill"
 func Conjoin(val []string, conjunction string) string {
 
 	lenVal := len(val)
@@ -185,9 +185,9 @@ func Conjoin(val []string, conjunction string) string {
 	}
 }
 
-//PrepCookieDomain removes http(s) from the institution's root URL
-//to function as a cookie domain value
-//e.g., https://princeton.seminars.app -> princeton.seminars.app
+// PrepCookieDomain removes http(s) from the institution's root URL
+// to function as a cookie domain value
+// e.g., https://princeton.seminars.app -> princeton.seminars.app
 func PrepCookieDomain(val string) string {
 	val = strings.Replace(val, "https://", "", -1)
 	val = strings.Replace(val, "http://", "", -1)
@@ -197,7 +197,7 @@ func PrepCookieDomain(val string) string {
 	return val
 }
 
-//MakeFullname concats first and last name
+// MakeFullname concats first and last name
 func MakeFullname(firstname, lastname, alternate string) string {
 	firstname = strings.TrimSpace(firstname)
 	lastname = strings.TrimSpace(lastname)
